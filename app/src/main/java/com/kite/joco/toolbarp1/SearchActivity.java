@@ -1,34 +1,50 @@
 package com.kite.joco.toolbarp1;
 
 import android.app.SearchManager;
-import android.content.ClipData;
 import android.content.Context;
-import android.support.v4.view.MenuItemCompat;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+public class SearchActivity extends AppCompatActivity {
+
+    TextView tvHello;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar tbElso = (Toolbar) findViewById(R.id.toolBar);
-        setSupportActionBar(tbElso);
-        /*tbElso.setSubtitle("Subtitle of toolbar");
-        tbElso.setSubtitleTextColor(getResources().getColor(R.color.blue));
-        tbElso.setTitle("Title of toolbar");
-        tbElso.setTitleTextColor(getResources().getColor(R.color.red));
-        tbElso.setNavigationIcon(getResources().getDrawable(android.R.drawable.arrow_down_float));
-        tbElso.setNavigationContentDescription("Navi item desc");*/
-        tbElso.inflateMenu(R.menu.menu_main);
+        tvHello = (TextView) findViewById(R.id.tvHello);
+        handleIntent(getIntent());
 
+        setContentView(R.layout.activity_search);
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.d("TOOLBAR:SEARCHACTIVITY","oncreate");
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())){
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            Log.d("TOOLBARSEARCH", " Search fired with : " + query);
+            showsearchString(query);
+        }
+        else {
+            Log.d("TOOLBARSEARCH"," Nem kereséssel lett az Activity meghívva");
+        }
+    }
+
+    private void showsearchString(String text) {
+        tvHello.setText(text);
     }
 
     @Override
@@ -37,10 +53,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
         SearchView searchView = (SearchView) menu.findItem(R.id.btnsearch).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
         return true;
     }
 
@@ -55,22 +69,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         if (id == R.id.action_settings) {
             return true;
         }
-        if (id == R.id.btnsearch) {
+        if (id == R.id.btnsearch){
             onSearchRequested();
-            Log.d("TOOLBARSEARCH"," search started");
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        Log.d("TOOLBAR"," A query: " +query);
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        return false;
     }
 }
