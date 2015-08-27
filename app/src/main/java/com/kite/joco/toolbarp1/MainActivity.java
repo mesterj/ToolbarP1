@@ -3,6 +3,7 @@ package com.kite.joco.toolbarp1;
 import android.app.SearchManager;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,8 +13,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+
+
+    TextView tvHello;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         setContentView(R.layout.activity_main);
         Toolbar tbElso = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(tbElso);
+        tvHello = (TextView) findViewById(R.id.tvHelloMain);
         /*tbElso.setSubtitle("Subtitle of toolbar");
         tbElso.setSubtitleTextColor(getResources().getColor(R.color.blue));
         tbElso.setTitle("Title of toolbar");
@@ -28,8 +35,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         tbElso.setNavigationIcon(getResources().getDrawable(android.R.drawable.arrow_down_float));
         tbElso.setNavigationContentDescription("Navi item desc");*/
         tbElso.inflateMenu(R.menu.menu_main);
-
+        if (getIntent() != null) {
+            handleIntent(getIntent());
+        } else {
+            Log.d("TOOLBAR:MAINACTIVITY", ":Hogy a csába lehet null az intent???");
+        }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         SearchView searchView = (SearchView) menu.findItem(R.id.btnsearch).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(this);
 
         return true;
     }
@@ -56,21 +69,37 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             return true;
         }
         if (id == R.id.btnsearch) {
-            onSearchRequested();
-            Log.d("TOOLBARSEARCH"," search started");
+            //    onSearchRequested();
+            Log.d("TOOLBARSEARCH", "  search started just need under android 3.0");
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            Log.d("TOOLBARSEARCH", " Search fired with : " + query);
+            showsearchString(query);
+        } else {
+            Log.d("TOOLBARSEARCH", " Nem kereséssel lett az Activity meghívva");
+        }
+    }
+
+    private void showsearchString(String text) {
+        tvHello.setText(text);
+    }
+
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Log.d("TOOLBAR"," A query: " +query);
+        Toast.makeText(this,query,Toast.LENGTH_SHORT).show();
+        Log.d("TOOLBAR:MAINACTIVITY"," A keresett szöveg " + query);
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
+        Log.d("TOOLBAR:MAINACTIVITY"," A keresés új szövege "+newText);
         return false;
     }
 }
