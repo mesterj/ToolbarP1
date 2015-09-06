@@ -25,6 +25,13 @@
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
 
+    <Button
+        android:text="Másik activity"
+        android:onClick="onClick"
+        android:id="@+id/btnSearchActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvHelloMain"/>
 
 
 </RelativeLayout>

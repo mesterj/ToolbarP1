@@ -1,12 +1,10 @@
 package com.kite.joco.toolbarp1;
 
 import android.app.SearchManager;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -42,6 +40,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
+
+    public void onClick(View v) {
+        Intent searchIntent = new Intent(this,SearchActivity.class);
+        startActivity(searchIntent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
