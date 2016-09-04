@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
 
     public void onClick(View v) {
-        Intent searchIntent = new Intent(this,SearchActivity.class);
+        Intent searchIntent = new Intent(this,SpinnerToolbar.class);
         startActivity(searchIntent);
     }
 

@@ -4,4 +4,22 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_spinner_toolbar">SpinnerToolbar</string>
+
+    <string-array name="alk">
+        <item>Baja</item>
+        <item>Baja-Mátéháza</item>
+        <item>Budaörs</item>
+        <item>Dabas</item>
+        <item>Derecske</item>
+        <item>Dombóvár</item>
+        <item>Füzesabony</item>
+        <item>Felsőzsolca</item>
+        <item>Győr</item>
+        <item>Herceghalom</item>
+        <item>Kaposvár</item>
+        <item>Kecskemét</item>
+
+
+    </string-array>
 </resources>
